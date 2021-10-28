@@ -1,3 +1,4 @@
 loguru
 selenium
 pandas
+numpy
