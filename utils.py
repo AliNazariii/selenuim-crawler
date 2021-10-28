@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from loguru import logger
+import numpy as np
 import time
 import json
 
@@ -74,3 +75,18 @@ def get_pricing_link(link):
 def get_min_price(response, field):
     if response[field]:
         return response[field]["tieredPricing"]["items"][0]["amount"]
+
+
+def extract_unique_items(df, feature):
+    return list(set(np.concatenate(np.array(list(map(lambda categories: eval(categories), df[feature].values)))).ravel()))
+
+def encode_categorical_values(df, categories):
+    for category in categories:
+        df[category] = 0
+    
+    def encode_categories(row):
+        index = row.name
+        for category in eval(row.categories):
+            df.loc[index, category] = 1
+    df.apply(encode_categories, axis=1)
+    return df
