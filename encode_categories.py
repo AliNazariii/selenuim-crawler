@@ -7,6 +7,7 @@ if __name__ == "__main__":
 
     categories = utils.extract_unique_items(df, "categories")
     df = utils.encode_categorical_values(df, categories)
+    df = df.drop("categories", 1)
 
     ENCODED_DATASET_PATH = "encoded_cat_marketplace.csv"
     df.to_csv(ENCODED_DATASET_PATH, encoding='utf-8', index=False)
